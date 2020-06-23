@@ -1,0 +1,19 @@
+.disabled-link{
+    cursor: default;
+    pointer-events: none;        
+    text-decoration: none;
+    color: grey;
+}
+
+.btnEvent{
+    border:0px solid red;
+    margin-top: 1%;
+}
+
+.btnStyle{
+    margin-bottom: 1%;
+}
+
+.btnStyle:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+  }

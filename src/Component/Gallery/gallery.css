@@ -1,0 +1,54 @@
+.container-card {
+    width:100%;
+    padding: 10px;
+    display:flex;
+    flex-flow:row wrap;
+    justify-content: flex-start;
+}
+
+.card{
+    width: 15%;
+    margin:10px;
+    border-radius: 15px;
+}
+
+.card-header {
+    text-transform: capitalize;
+    background-color: #3c5aa6;
+    color: #ffcb05;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.card-body{
+    background-color: #f7f7f7;
+    height:150;
+}
+
+.card-footer{
+    height:150px;
+    text-transform: capitalize;
+    font-weight: 100;
+    letter-spacing: 2px;
+}
+
+.titleAbility{
+    text-decoration:underline;
+    font-size: 18px;
+    color: #3c5aa6;
+    font-weight: 400;
+}
+
+.ability{
+    width: 100%;
+    margin: 5px;
+    border-radius:10px;
+    background-color: transparent;
+}
+
+@media only screen and (max-width: 600px) {
+    .card{
+        width: 90%;
+        margin:10px;
+    }
+}

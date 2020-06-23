@@ -1,0 +1,143 @@
+import React from "react";
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+import Link from "@material-ui/core/Link";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import { Formik } from "formik";
+import * as EmailValidator from "email-validator";
+import * as Yup from "yup";
+import {Redirect} from 'react-router-dom';
+import "./signup.css";
+
+const SignUp = () => (
+  <Formik
+    initialValues={{ email: "", password: "" }}
+    onSubmit={(values, { setSubmitting }) => {
+      setTimeout(() => {
+        console.log("Logging in", values);
+        setSubmitting(false);
+      }, 200);
+    }}
+    validate={(values) => {
+      let errors = {};
+      if (!values.email) {
+        errors.email = "Required";
+      } else if (!EmailValidator.validate(values.email)) {
+        errors.email = "Invalid email address.";
+      }
+
+      const passwordRegex = /(?=.*[0-9])/;
+      if (!values.password) {
+        errors.password = "Required";
+      } else if (values.password.length < 8) {
+        errors.password = "Password must be 8 characters long.";
+      } else if (!passwordRegex.test(values.password)) {
+        errors.password = "Invalid password. Must contain one number.";
+      }
+
+      return errors;
+    }}
+    validationSchema={Yup.object().shape({
+      email: Yup.string().email().required("Required"),
+      password: Yup.string()
+        .required("No password provided.")
+        .min(8, "Password is too short - should be 8 chars minimum.")
+        .matches(/(?=.*[0-9])/, "Password must contain a number."),
+    })}
+  >
+    {(props) => {
+      const {
+        values,
+        touched,
+        errors,
+        isSubmitting,
+        handleChange,
+        handleBlur,
+        handleSubmit
+      } = props;
+
+      return (
+        <div className="containerSignIn" >
+          <div className="paper">
+          <Avatar className="avatar">
+            <LockOutlinedIcon />
+          </Avatar>
+          <div className="title">
+            <h1>Sign Up</h1>
+          </div>
+          <form onSubmit={handleSubmit} noValidate>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              autoFocus
+              required
+              label="Email Address"
+              id="email"
+              name="email"
+              type="text"
+              value={values.email}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              className={errors.email && touched.email && "error"}
+            />
+            {errors.email && touched.email && (
+              <div className="input-feedback">{errors.email}</div>
+            )}
+
+            <TextField
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              autoFocus
+              required
+              id="password"
+              name="password"
+              type="password"
+              label="Password"
+              placeholder="Enter your password"
+              value={values.password}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              className={errors.password && touched.password && "error"}
+            />
+            {errors.password && touched.password && (
+              <div className="input-feedback">{errors.password}</div>
+            )}
+
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
+
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className="submit" disabled={isSubmitting}>
+              Submit
+            </Button>
+            <Grid container>
+              <Grid item xs>
+                <Link href="#" variant="body2">
+                  Forgot password?
+                </Link>
+              </Grid>
+            </Grid>
+          </form>
+          </div>
+          <Box mt={8}>
+        </Box>
+        </div>
+      );
+    }}
+  </Formik>
+);
+
+export default SignUp;
